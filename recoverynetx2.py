@@ -9,7 +9,7 @@ from os import listdir
 from os.path import isfile, join
 
 import numpy as np
-import keras
+#import keras
 import scipy.io
 from scipy.io import loadmat
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
@@ -324,7 +324,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-import keras
+#import keras
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 from sklearn.model_selection import train_test_split

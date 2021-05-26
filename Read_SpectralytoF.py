@@ -8,7 +8,7 @@ from os import listdir
 from os.path import isfile, join
 
 import numpy as np
-#import keras
+import keras
 import scipy.io
 import pandas as pd
 from scipy.io import loadmat
@@ -23,11 +23,11 @@ from tensorflow.keras.models import *
 
 # Defined protocol of input and ouput (it is recommended only read, not applied operator here, but it is possible)
 def Input_image(image):
-    images = loadmat(image).get('re')
+    images = loadmat(image).get('Ibcc')
     return images
 
 def Oput_image(image):
-    images = loadmat(image).get('re_1')
+    images = loadmat(image).get('F')
     return images
 
 def load_sambles(data):
@@ -39,7 +39,7 @@ def load_sambles(data):
   return samples
 
 
-class DataGenerator(tf.keras.utils.Sequence):
+class DataGenerator(keras.utils.Sequence):
     def __init__(self, samples,PATH,batch_size=1,dim_input=(512, 512, 3), shuffle=True, dim_oput=(512, 512, 3)):
         'Initialization'
         self.dim_input = dim_input

@@ -12,7 +12,7 @@ from os import listdir
 from os.path import isfile, join
 
 import numpy as np
-import keras
+#import keras
 import scipy.io
 from tensorflow.keras.layers import *
 from tensorflow.keras.models import *
@@ -24,8 +24,7 @@ from Metrics import *
 
 
 def UNetYtoY1(IMG_HEIGHT,IMG_WIDTH,L_bands,L_imput,BATCH_SIZE,PATH,split_v,epocas,optimizer):
-    # To run in cpu
-    os.environ["CUDA_VISIBLE_DEVICES"]= '-1'
+
     
     test_dataset,train_dataset=Build_data_set(IMG_HEIGHT,IMG_WIDTH,L_bands,L_imput,BATCH_SIZE,PATH,split_v)  # build the DataStore from Read_Spectral.py
     
@@ -46,10 +45,10 @@ def UNetYtoY1(IMG_HEIGHT,IMG_WIDTH,L_bands,L_imput,BATCH_SIZE,PATH,split_v,epoca
     history = modely1.fit_generator(train_dataset, epochs=epocas,shuffle=True,validation_data=(test_dataset))
     
     #.------------ seee the accuracy---------------
-    plt.plot(history.history['loss'], label='Training loss')
-    plt.plot(history.history['val_loss'], label='Validation loss')
+    plt.plot(history.history['psnr'], label='Training PSNR')
+    #plt.plot(history.history['val_loss'], label='Validation loss')
     plt.xlabel('Epoch')
-    plt.ylabel('Loss')
+    plt.ylabel('PSNR (dB)')
     plt.legend()
     plt.savefig('REDytoy1/trainEp'+str(epocas)+'.png')
     plt.savefig('REDytoy1/trainEp'+str(epocas)+'.eps', dpi=500)
@@ -58,8 +57,8 @@ def UNetYtoY1(IMG_HEIGHT,IMG_WIDTH,L_bands,L_imput,BATCH_SIZE,PATH,split_v,epoca
     modely1.save_weights('modelosEntrenados/UNetYtoY1ep'+str(epocas)+'.h5')
   
   
-    test_loss = modely1.evaluate(test_dataset,  verbose=2)
-    print('.....testing loss y to y1: ' +str(test_loss))
+    #test_loss = modely1.evaluate(test_dataset,  verbose=2)
+    #print('.....testing loss y to y1: ' +str(test_loss))
     
     
     #
@@ -90,8 +89,7 @@ def UNetYtoY1(IMG_HEIGHT,IMG_WIDTH,L_bands,L_imput,BATCH_SIZE,PATH,split_v,epoca
     return modely1
         
 def retUNetYtoY1(IMG_HEIGHT,IMG_WIDTH,L_bands,L_imput,BATCH_SIZE,PATH,split_v,epocas,optimizer,weights):
-    # To run in cpu
-    os.environ["CUDA_VISIBLE_DEVICES"]= '-1'
+
     
     test_dataset,train_dataset=Build_data_set(IMG_HEIGHT,IMG_WIDTH,L_bands,L_imput,BATCH_SIZE,PATH,split_v)  # build the DataStore from Read_Spectral.py
     
@@ -110,25 +108,25 @@ def retUNetYtoY1(IMG_HEIGHT,IMG_WIDTH,L_bands,L_imput,BATCH_SIZE,PATH,split_v,ep
     history = modely1.fit_generator(train_dataset, epochs=epocas,shuffle=True,validation_data=(test_dataset))
     
     #.------------ seee the accuracy---------------
-    plt.plot(history.history['loss'], label='Training loss')
-    plt.plot(history.history['val_loss'], label='Validation loss')
+    plt.plot(history.history['psnr'], label='Training PSNR')
+    #plt.plot(history.history['val_loss'], label='Validation loss')
     plt.xlabel('Epoch')
-    plt.ylabel('Loss')
+    plt.ylabel('PSNR (dB)')
     plt.legend()
     plt.savefig('REDytoy1/trainEp'+str(epocas)+'.png')
     plt.savefig('REDytoy1/trainEp'+str(epocas)+'.eps', dpi=500)
     plt.show()
     
-    #modely1.save_weights('modelosEntrenados/UNetYtoY1ep'+str(epocas)+'.h5')
+    modely1.save_weights('modelosEntrenados/UNetYtoY1ep'+str(epocas)+'.h5')
   
   
-    test_loss = modely1.evaluate(test_dataset,  verbose=2)
-    print('.....testing loss y to y1: ' +str(test_loss))
+    #test_loss = modely1.evaluate(test_dataset,  verbose=2)
+    #print('.....testing loss y to y1: ' +str(test_loss))
     
     probar = 'ARAD'
     #probar = 'drive'
     #
-    if True:
+    if False:
         
         ''' data loading '''
         if probar == 'drive':
